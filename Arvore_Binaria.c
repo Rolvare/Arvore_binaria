@@ -195,25 +195,42 @@ Arvore insereFolha(Arvore ap, int v){  //v = valor
     return ap;
 }
 
-/*
-Arvore removeFolha(Arvore ap, int v){
-    int x;
 
+Arvore removeFolha(Arvore ap, int v){;
+    Arvore y, z;
     if(ap == NULL){
         printf("\n arvore vazia \n");
     }else{
-        if(ap->elemento > v){   //remove nos folhas (nos sem filhos)
+        if(ap->elemento > v){  
             ap->esq = removeFolha(ap->esq, v);
 
         }else if(ap->elemento < v){     
             ap->dir = removeFolha(ap->dir, v);
 
-        }else{      //remove nos que possuem 1 filhos
+        }else{      // achou o no a remover
+                    // no sem filhos
             if((ap->esq == NULL) && ap->dir == NULL){
-                x = ap - 1; //free(ap);
+                free(ap);
                 ap = NULL;
+            }else if (ap->esq == NULL) { //no so tem filho a direita
+                y = ap;
+                ap = ap->dir;
+                free(y);
+            }else if(ap->dir == NULL){  //no so tem filho a esquerda
+                y = ap;
+                ap = ap->esq;
+                free(y);
+            }else {             //no tem dois filhos
+                z = ap->esq;
+
+                while(z->dir != NULL){
+                    z = z->dir;
+                }
+                ap->elemento = z->elemento;  //troca as informacoes
+                z->elemento = v;
+                ap->esq = removerFolha(ap->esq, v);
             }
         }
     }
+    return ap;
 }
-*/
